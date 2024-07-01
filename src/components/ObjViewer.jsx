@@ -143,7 +143,7 @@ export default function ObjViewer() {
   }, [objUrls.length]);
 
   return (
-    <Canvas>
+    <Canvas style={{ width: "50%", height: "35vh" }}>
       {/* 주변 조명으로, 장면 전체를 고르게 비춥니다. */}
       <ambientLight intensity={0.5} />
       {/* 스포트라이트 조명 */}

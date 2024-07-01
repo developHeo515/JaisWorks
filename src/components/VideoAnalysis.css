@@ -1,0 +1,34 @@
+.VideoAnalysis {
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+  /* max-width: 80%; */
+  /* width: 1200px; */
+  width: 55%;
+  padding-left: 10px;
+  padding-right: 10px;
+  /* margin: 50px auto 0; */
+}
+
+.InputAndViewer {
+  /* position: relative; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* width: 100%; */
+  /* max-width: 80%; */
+  /* height: 180px; */
+  /* padding-bottom: 56.25%; */
+}
+
+.InputAndViewer video {
+  width: 50%;
+  height: 100%;
+  /* margin-right: 20px; */
+}
+
+.AnalysisResult video {
+  width: 25%;
+  height: 100%;
+  /* margin-right: 20px; */
+}
