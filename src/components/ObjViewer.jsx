@@ -155,7 +155,7 @@ export default function ObjViewer() {
         makeDefault={true}
         // enableZoom={false}
       />
-      <axesHelper args={[10, 10, 10]} />
+      {/* <axesHelper args={[10, 10, 10]} /> */}
       <Model url={objUrls[index]} />
     </Canvas>
   );
