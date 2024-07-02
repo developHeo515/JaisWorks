@@ -19,12 +19,36 @@ function VideoAnalysis() {
   const [videoUrl, setVideoUrl] = useState("");
   const [objData, setObjData] = useState([]);
 
+  const [pose2D, setPose2D] = useState("");
+  const [pose3d, setPose3d] = useState("");
+  const [left_arm_2D, setleft_arm_2D] = useState("");
+  const [left_arm_3D, setleft_arm_3D] = useState("");
+  const [right_arm_2D, setright_arm_2D] = useState("");
+  const [right_arm_3D, setright_arm_3D] = useState("");
+
+  const [left_leg_2D, setleft_leg_2D] = useState("");
+  const [left_leg_3D, setleft_leg_3D] = useState("");
+  const [right_leg_2D, setright_leg_2D] = useState("");
+  const [right_leg_3D, setright_leg_3D] = useState("");
+
   // 영상 분석 api 호출
   const getApi = async () => {
     try {
       console.log("백엔드호출중");
       const response = await axios.get(`http://54.180.245.26/get_json_data/`); // 여러분이 사용하고자 하는 API 엔드포인트로 대체하세요.
-      console.log(response.data);
+      console.log(response.data[1]);
+
+      setPose2D(response.data[1].pose2D);
+      setPose3d(response.data[1].pose3D_270);
+      setleft_arm_2D(response.data[1].left_arm_2D);
+      setleft_arm_3D(response.data[1].left_arm_3D);
+      setright_arm_2D(response.data[1].right_arm_2D);
+      setright_arm_3D(response.data[1].right_arm_3D);
+
+      setleft_leg_2D(response.data[1].left_leg_2D);
+      setleft_leg_3D(response.data[1].left_leg_3D);
+      setright_leg_2D(response.data[1].right_leg_2D);
+      setright_leg_3D(response.data[1].right_leg_3D);
       console.log("백엔드호출완");
       // videoUrl을 사용하여 비디오 재생 또는 다운로드
       //   fetch("http://54.180.245.26/get_video/1/left_arm_3D.mp4/")
@@ -86,41 +110,62 @@ function VideoAnalysis() {
           <source src={InputVideo} type="video/mp4" />
         </video> */}
         <div className="InputAndViewer">
-          <video controls ref={(el) => (videoRefs.current[0] = el)}>
-            <source src={InputVideo} type="video/mp4" />
-          </video>
-          <video controls ref={(el) => (videoRefs.current[1] = el)}>
-            <source src={mv1} type="video/mp4" />
-          </video>
+          {/* <ObjViewer3 /> */}
+          {pose2D && (
+            <video controls ref={(el) => (videoRefs.current[0] = el)}>
+              <source src={pose2D} type="video/mp4" />
+            </video>
+          )}
+          {pose3d && (
+            <video controls ref={(el) => (videoRefs.current[1] = el)}>
+              <source src={pose3d} type="video/mp4" />
+            </video>
+          )}
 
           {/* <ObjViewer width="50%" height="100%" /> */}
         </div>
 
         <div className="AnalysisResult">
-          <video controls ref={(el) => (videoRefs.current[2] = el)}>
-            <source src={mv1} type="video/mp4" />
-          </video>
-          <video controls ref={(el) => (videoRefs.current[3] = el)}>
-            <source src={mv2} type="video/mp4" />
-          </video>
-          <video controls ref={(el) => (videoRefs.current[4] = el)}>
-            <source src={mv3} type="video/mp4" />
-          </video>
-          <video controls ref={(el) => (videoRefs.current[5] = el)}>
-            <source src={mv4} type="video/mp4" />
-          </video>
-          <video controls ref={(el) => (videoRefs.current[6] = el)}>
-            <source src={mv5} type="video/mp4" />
-          </video>
-          <video controls ref={(el) => (videoRefs.current[7] = el)}>
-            <source src={mv6} type="video/mp4" />
-          </video>
-          <video controls ref={(el) => (videoRefs.current[8] = el)}>
-            <source src={mv7} type="video/mp4" />
-          </video>
-          <video controls ref={(el) => (videoRefs.current[9] = el)}>
-            <source src={mv8} type="video/mp4" />
-          </video>
+          {left_arm_2D && (
+            <video controls ref={(el) => (videoRefs.current[2] = el)}>
+              <source src={left_arm_2D} type="video/mp4" />
+            </video>
+          )}
+          {left_arm_3D && (
+            <video controls ref={(el) => (videoRefs.current[3] = el)}>
+              <source src={left_arm_3D} type="video/mp4" />
+            </video>
+          )}
+          {right_arm_2D && (
+            <video controls ref={(el) => (videoRefs.current[4] = el)}>
+              <source src={right_arm_2D} type="video/mp4" />
+            </video>
+          )}
+          {right_arm_3D && (
+            <video controls ref={(el) => (videoRefs.current[5] = el)}>
+              <source src={right_arm_3D} type="video/mp4" />
+            </video>
+          )}
+          {left_leg_2D && (
+            <video controls ref={(el) => (videoRefs.current[6] = el)}>
+              <source src={left_leg_2D} type="video/mp4" />
+            </video>
+          )}
+          {left_leg_3D && (
+            <video controls ref={(el) => (videoRefs.current[7] = el)}>
+              <source src={left_leg_3D} type="video/mp4" />
+            </video>
+          )}
+          {right_leg_2D && (
+            <video controls ref={(el) => (videoRefs.current[8] = el)}>
+              <source src={right_leg_2D} type="video/mp4" />
+            </video>
+          )}
+          {right_leg_3D && (
+            <video controls ref={(el) => (videoRefs.current[9] = el)}>
+              <source src={right_leg_3D} type="video/mp4" />
+            </video>
+          )}
         </div>
         {/* <button onClick={getApi}>api 호출</button> */}
         <button onClick={playAllVideos}>동시 재생</button>
