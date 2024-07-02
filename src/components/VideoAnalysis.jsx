@@ -44,10 +44,30 @@ function VideoAnalysis() {
   const videoRefs = useRef([]);
   // 모든 비디오를 동시에 재생하는 함수
   const playAllVideos = () => {
-    console.log("동영상호출");
+    console.log("동영상 동시 재생");
     videoRefs.current.forEach((video) => {
       if (video) {
         video.play();
+      }
+    });
+  };
+
+  // 모든 비디오를 동시에 정지하는 함수
+  const pauseAllVideos = () => {
+    console.log("동영상 동시 정지");
+    videoRefs.current.forEach((video) => {
+      if (video) {
+        video.pause();
+      }
+    });
+  };
+
+  // 모든 비디오의 시간을 초기화하는 함수
+  const resetAllVideos = () => {
+    console.log("동영상 동시 초기화");
+    videoRefs.current.forEach((video) => {
+      if (video) {
+        video.currentTime = 0;
       }
     });
   };
@@ -96,7 +116,9 @@ function VideoAnalysis() {
           </video>
         </div>
         <button onClick={mp4file}>api 호출</button>
-        <button onClick={playAllVideos}>동기화 재생</button>
+        <button onClick={playAllVideos}>동시 재생</button>
+        <button onClick={pauseAllVideos}>동시 정지</button>
+        <button onClick={resetAllVideos}>영상 시간 초기화</button>
 
         {/* obj 파일 추출 */}
         {/* <ObjViewer2
