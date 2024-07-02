@@ -5,6 +5,7 @@ import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
+import "./ObjViewer.css";
 
 function Model({ url }) {
   const obj = useLoader(OBJLoader, url);
@@ -16,26 +17,36 @@ function Model({ url }) {
       const box = new THREE.Box3().setFromObject(obj);
       const center = box.getCenter(new THREE.Vector3());
       obj.position.sub(center); // Center the model
+
+      // obj.traverse((child) => {
+      //   if (child instanceof THREE.Mesh) {
+      //     child.material = new THREE.MeshStandardMaterial({
+      //       color: new THREE.Color(0x0055ff), // 원하는 색상
+      //       metalness: 0.5,
+      //       roughness: 0.5,
+      //     });
+      //   }
+      // });
     }
   }, [obj]);
 
-  //   useFrame(() => {
-  //     if (ref.current) {
-  //       //   ref.current.rotation.y += 0.01; // 단순 애니메이션 효과를 위해 모델을 회전시킵니다.
-  //     }
-  //   });
-
-  return (
-    <primitive
-      ref={ref}
-      object={obj}
-      scale={3}
-      //   position={{ x: 10, y: 10, z: 0 }}
-      //   width="320px"
-      //   height="180px"
-    />
-  );
+  return <primitive ref={ref} object={obj} scale={3} />;
 }
+
+// function Axes() {
+//   const axes = useRef();
+
+//   useEffect(() => {
+//     const axesHelper = new THREE.AxesHelper(5);
+//     axesHelper.material = new THREE.LineBasicMaterial({
+//       color: 0x000000,
+//       linewidth: 2,
+//     });
+//     axes.current.add(axesHelper);
+//   }, []);
+
+//   return <group ref={axes} />;
+// }
 
 export default function ObjViewer() {
   const [index, setIndex] = useState(0);
@@ -143,20 +154,25 @@ export default function ObjViewer() {
   }, [objUrls.length]);
 
   return (
-    <Canvas style={{ width: "50%", height: "35vh" }}>
-      {/* 주변 조명으로, 장면 전체를 고르게 비춥니다. */}
-      <ambientLight intensity={0.5} />
-      {/* 스포트라이트 조명 */}
-      {/* <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} /> */}
-      {/* 점 조명으로, 특정 지점에서 모든 방향으로 빛을 방출 */}
-      {/* <pointLight position={[-10, -10, -10]} /> */}
-      <OrbitControls
-        //   camera={cameraRef.current}
-        makeDefault={true}
-        // enableZoom={false}
-      />
-      {/* <axesHelper args={[10, 10, 10]} /> */}
-      <Model url={objUrls[index]} />
-    </Canvas>
+    <div className="ObjViewer">
+      <p>3D 아바타를 클릭 후 움직여 보세요</p>
+      {/*  style={{ width: "20%", height: "50vh" }} */}
+      <Canvas>
+        {/* 주변 조명으로, 장면 전체를 고르게 비춥니다. */}
+        <ambientLight intensity={0.5} />
+        {/* 스포트라이트 조명 */}
+        {/* <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} /> */}
+        {/* 점 조명으로, 특정 지점에서 모든 방향으로 빛을 방출 */}
+        {/* <pointLight position={[-10, -10, -10]} /> */}
+        <OrbitControls
+          //   camera={cameraRef.current}
+          makeDefault={true}
+          // enableZoom={false}
+        />
+        {/* <axesHelper args={[10, 10, 10]} /> */}
+        {/* <Axes /> */}
+        <Model url={objUrls[index]} />
+      </Canvas>
+    </div>
   );
 }

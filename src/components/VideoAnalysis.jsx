@@ -20,11 +20,11 @@ function VideoAnalysis() {
   const [objData, setObjData] = useState([]);
 
   // 영상 분석 api 호출
-  const mp4file = async () => {
+  const getApi = async () => {
     try {
       console.log("백엔드호출중");
       const response = await axios.get(`http://54.180.245.26/get_json_data/`); // 여러분이 사용하고자 하는 API 엔드포인트로 대체하세요.
-      console.log(response);
+      console.log(response.data);
       console.log("백엔드호출완");
       // videoUrl을 사용하여 비디오 재생 또는 다운로드
       //   fetch("http://54.180.245.26/get_video/1/left_arm_3D.mp4/")
@@ -39,6 +39,10 @@ function VideoAnalysis() {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    getApi();
+  }, []);
 
   //동영상 동시 재생
   const videoRefs = useRef([]);
@@ -85,37 +89,40 @@ function VideoAnalysis() {
           <video controls ref={(el) => (videoRefs.current[0] = el)}>
             <source src={InputVideo} type="video/mp4" />
           </video>
-
-          <ObjViewer width="50%" height="100%" />
-        </div>
-
-        <div className="AnalysisResult">
           <video controls ref={(el) => (videoRefs.current[1] = el)}>
             <source src={mv1} type="video/mp4" />
           </video>
+
+          {/* <ObjViewer width="50%" height="100%" /> */}
+        </div>
+
+        <div className="AnalysisResult">
           <video controls ref={(el) => (videoRefs.current[2] = el)}>
-            <source src={mv2} type="video/mp4" />
+            <source src={mv1} type="video/mp4" />
           </video>
           <video controls ref={(el) => (videoRefs.current[3] = el)}>
-            <source src={mv3} type="video/mp4" />
+            <source src={mv2} type="video/mp4" />
           </video>
           <video controls ref={(el) => (videoRefs.current[4] = el)}>
-            <source src={mv4} type="video/mp4" />
+            <source src={mv3} type="video/mp4" />
           </video>
           <video controls ref={(el) => (videoRefs.current[5] = el)}>
-            <source src={mv5} type="video/mp4" />
+            <source src={mv4} type="video/mp4" />
           </video>
           <video controls ref={(el) => (videoRefs.current[6] = el)}>
-            <source src={mv6} type="video/mp4" />
+            <source src={mv5} type="video/mp4" />
           </video>
           <video controls ref={(el) => (videoRefs.current[7] = el)}>
-            <source src={mv7} type="video/mp4" />
+            <source src={mv6} type="video/mp4" />
           </video>
           <video controls ref={(el) => (videoRefs.current[8] = el)}>
+            <source src={mv7} type="video/mp4" />
+          </video>
+          <video controls ref={(el) => (videoRefs.current[9] = el)}>
             <source src={mv8} type="video/mp4" />
           </video>
         </div>
-        <button onClick={mp4file}>api 호출</button>
+        {/* <button onClick={getApi}>api 호출</button> */}
         <button onClick={playAllVideos}>동시 재생</button>
         <button onClick={pauseAllVideos}>동시 정지</button>
         <button onClick={resetAllVideos}>영상 시간 초기화</button>

@@ -4,6 +4,9 @@ import Menubar from "../components/Menubar.jsx";
 import VideoAnalysis from "../components/VideoAnalysis.jsx";
 import Chatbot from "../components/Chatbot.jsx";
 import "./MainPage1.css";
+import ObjViewer from "../components/ObjViewer.jsx";
+import ObjViewer2 from "../components/ObjViewer2.jsx";
+import ObjViewer3 from "../components/ObjViewer3.jsx";
 
 function MainPage1() {
   return (
@@ -11,7 +14,8 @@ function MainPage1() {
       <div className="MainPage1">
         <Menubar />
         <VideoAnalysis />
-        <Chatbot />
+        <ObjViewer />
+        {/* <Chatbot /> */}
       </div>
     </>
   );
