@@ -113,8 +113,10 @@ function VideoAnalysis() {
         <video className="videoDiv" controls>
           <source src={InputVideo} type="video/mp4" />
         </video> */}
+        <p>골프자세 2D & 3D</p>
         <div className="InputAndViewer">
           {/* <ObjViewer3 /> */}
+
           {pose2D && (
             <video controls ref={(el) => (videoRefs.current[0] = el)}>
               <source src={pose2D} type="video/mp4" />
@@ -130,6 +132,7 @@ function VideoAnalysis() {
         </div>
 
         <div className="AnalysisResult">
+          <p>왼팔 2D & 3D</p>
           {left_arm_2D && (
             <video controls ref={(el) => (videoRefs.current[2] = el)}>
               <source src={left_arm_2D} type="video/mp4" />
@@ -140,6 +143,7 @@ function VideoAnalysis() {
               <source src={left_arm_3D} type="video/mp4" />
             </video>
           )}
+          <p>오른팔 2D & 3D</p>
           {right_arm_2D && (
             <video controls ref={(el) => (videoRefs.current[4] = el)}>
               <source src={right_arm_2D} type="video/mp4" />
@@ -150,6 +154,7 @@ function VideoAnalysis() {
               <source src={right_arm_3D} type="video/mp4" />
             </video>
           )}
+          <p>왼다리 2D & 3D</p>
           {left_leg_2D && (
             <video controls ref={(el) => (videoRefs.current[6] = el)}>
               <source src={left_leg_2D} type="video/mp4" />
@@ -160,6 +165,7 @@ function VideoAnalysis() {
               <source src={left_leg_3D} type="video/mp4" />
             </video>
           )}
+          <p>오른다리 2D & 3D</p>
           {right_leg_2D && (
             <video controls ref={(el) => (videoRefs.current[8] = el)}>
               <source src={right_leg_2D} type="video/mp4" />

@@ -29,7 +29,7 @@ function Menubar() {
         </Link>
 
         <li onClick={videoAnalysis}>영상 분석</li>
-        <li>챗봇 솔루션</li>
+        {/* <li>챗봇 솔루션</li> */}
       </div>
     </>
   );
