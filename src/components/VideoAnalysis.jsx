@@ -103,6 +103,10 @@ function VideoAnalysis() {
   return (
     <>
       <div className="VideoAnalysis">
+        {/* <button onClick={getApi}>api 호출</button> */}
+        <button onClick={playAllVideos}>동시 재생</button>
+        <button onClick={pauseAllVideos}>동시 정지</button>
+        <button onClick={resetAllVideos}>영상 시간 초기화</button>
         {/* <video className="videoDiv" controls>
           <source src={InputVideo} type="video/mp4" />
         </video>
@@ -178,14 +182,6 @@ function VideoAnalysis() {
         /> */}
         {/* <ObjViewer2 urls={objUrls} /> */}
         {/* <ObjViewer3 urls={objUrls} /> */}
-
-        {/* {console.log("실험", videoUrl)} */}
-        {/* {videoUrl && (
-        <video width="640" height="360" controls>
-          <source src={videoUrl} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      )} */}
       </div>
     </>
   );
