@@ -1,0 +1,13 @@
+/* 메뉴바 영역 */
+.ObjViewer {
+  width: 30%;
+  height: 80vh;
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: center; */
+}
+
+.ObjViewer p {
+  /* 수평 중앙 정렬하기 */
+  text-align: center;
+}
