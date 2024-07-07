@@ -110,7 +110,6 @@ function MainPage1() {
         <Menubar />
         <VideoAnalysis />
         <ObjViewer />
-        {/* <MeshViewer filename="/obj/mesh90.obj" /> */}
 
         {/* <Chatbot /> */}
       </div>

@@ -36,20 +36,25 @@ function VideoAnalysis() {
   const getApi = async () => {
     try {
       console.log("백엔드호출중");
-      const response = await axios.get(`http://54.180.245.26/get_json_data/`); // 여러분이 사용하고자 하는 API 엔드포인트로 대체하세요.
-      console.log(response.data[1]);
+      const response = await axios.get(
+        `https://golfposeserver.store/get_json_data/`
+      );
+      // const response = await axios.get(`http://54.180.245.26/get_json_data/`);
+      // 여러분이 사용하고자 하는 API 엔드포인트로 대체하세요.
 
-      setPose2D(response.data[1].pose2D);
-      setPose3d(response.data[1].pose3D_270);
-      setleft_arm_2D(response.data[1].left_arm_2D);
-      setleft_arm_3D(response.data[1].left_arm_3D);
-      setright_arm_2D(response.data[1].right_arm_2D);
-      setright_arm_3D(response.data[1].right_arm_3D);
+      console.log(response.data);
+      // console.log(response.data[1]);
+      // setPose2D(response.data[1].pose2D);
+      // setPose3d(response.data[1].pose3D_270);
+      // setleft_arm_2D(response.data[1].left_arm_2D);
+      // setleft_arm_3D(response.data[1].left_arm_3D);
+      // setright_arm_2D(response.data[1].right_arm_2D);
+      // setright_arm_3D(response.data[1].right_arm_3D);
 
-      setleft_leg_2D(response.data[1].left_leg_2D);
-      setleft_leg_3D(response.data[1].left_leg_3D);
-      setright_leg_2D(response.data[1].right_leg_2D);
-      setright_leg_3D(response.data[1].right_leg_3D);
+      // setleft_leg_2D(response.data[1].left_leg_2D);
+      // setleft_leg_3D(response.data[1].left_leg_3D);
+      // setright_leg_2D(response.data[1].right_leg_2D);
+      // setright_leg_3D(response.data[1].right_leg_3D);
       console.log("백엔드호출완");
       // videoUrl을 사용하여 비디오 재생 또는 다운로드
       //   fetch("http://54.180.245.26/get_video/1/left_arm_3D.mp4/")
@@ -60,7 +65,7 @@ function VideoAnalysis() {
       //       setVideoUrl(url);
       //     });
     } catch (error) {
-      console.log("백엔드호출실패");
+      console.log("백엔드호출실패 VideoAnalysis.jsx");
       console.log(error);
     }
   };

@@ -57,8 +57,12 @@ export default function ObjViewer() {
   const getApi = async () => {
     try {
       // console.log("백엔드호출중");
-      const response = await axios.get(`http://54.180.245.26/get_json_data/`); // 여러분이 사용하고자 하는 API 엔드포인트로 대체하세요.
-      // console.log(response.data[1]);
+      const response = await axios.get(
+        `https://golfposeserver.store/get_json_data/`
+      );
+      // const response = await axios.get(`http://54.180.245.26/get_json_data/`);
+      // 여러분이 사용하고자 하는 API 엔드포인트로 대체하세요.
+      console.log(response.data);
       // console.log(response.data[1].objs);
 
       setObjData(response.data[1].objs);
@@ -194,6 +198,7 @@ export default function ObjViewer() {
         />
         {/* <axesHelper args={[10, 10, 10]} /> */}
         {/* <Axes /> */}
+        {/* 여기서 Obj 파일 받아서 시각화 시켜줌 */}
         <Model url={objUrls[index]} />
       </Canvas>
     </div>

@@ -8,12 +8,13 @@
 // import mv7 from "../assets/video/7.3D_angle_animation_label_leftarm.mp4";
 // import mv8 from "../assets/video/8.3D_angle_animation_label_rightarm.mp4";
 // import InputVideo from "../assets/video/2D.mp4";
+import MeshViewer from "../components/MeshViewer.jsx";
 
 function MainPage2() {
   return (
     <>
       <div>
-        <h1>MainPage2</h1>
+        <MeshViewer />
       </div>
     </>
   );
