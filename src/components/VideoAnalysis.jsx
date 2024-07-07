@@ -9,10 +9,8 @@ import mv6 from "../assets/video/5.3D_angle_animation_label_leftleg.mp4";
 import mv7 from "../assets/video/2.2D_angle_animation_label_rightleg.mp4";
 import mv8 from "../assets/video/6.3D_angle_animation_label_rightleg.mp4";
 
-
-
 import ObjViewer from "../components/ObjViewer.jsx";
-import ObjViewer2 from "../components/ObjViewer2.jsx";
+import MeshViewer from "../components/MeshViewer.jsx";
 import ObjViewer3 from "../components/ObjViewer3.jsx";
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
@@ -117,52 +115,49 @@ function VideoAnalysis() {
           <source src={InputVideo} type="video/mp4" />
         </video> */}
 
-{/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ하드코딩용 코드ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ         */}
+        {/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ하드코딩용 코드ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ         */}
         <p>골프자세 2D</p>
         <div className="InputAndViewer">
-
-            <video controls ref={(el) => (videoRefs.current[0] = el)}>
-              <source src={InputVideo} type="video/mp4" />
-            </video>
-            {/* <video controls ref={(el) => (videoRefs.current[1] = el)}>
+          <video controls ref={(el) => (videoRefs.current[0] = el)}>
+            <source src={InputVideo} type="video/mp4" />
+          </video>
+          {/* <video controls ref={(el) => (videoRefs.current[1] = el)}>
               <source src={pose3d} type="video/mp4" />
             </video> */}
-
         </div>
 
         <div className="AnalysisResult">
           <p>왼팔 2D & 3D</p>
-            <video controls ref={(el) => (videoRefs.current[2] = el)}>
-              <source src={mv1} type="video/mp4" />
-            </video>
-            <video controls ref={(el) => (videoRefs.current[3] = el)}>
-              <source src={mv2} type="video/mp4" />
-            </video>
+          <video controls ref={(el) => (videoRefs.current[2] = el)}>
+            <source src={mv1} type="video/mp4" />
+          </video>
+          <video controls ref={(el) => (videoRefs.current[3] = el)}>
+            <source src={mv2} type="video/mp4" />
+          </video>
           <p>오른팔 2D & 3D</p>
-            <video controls ref={(el) => (videoRefs.current[4] = el)}>
-              <source src={mv3} type="video/mp4" />
-            </video>
-            <video controls ref={(el) => (videoRefs.current[5] = el)}>
-              <source src={mv4} type="video/mp4" />
-            </video>
+          <video controls ref={(el) => (videoRefs.current[4] = el)}>
+            <source src={mv3} type="video/mp4" />
+          </video>
+          <video controls ref={(el) => (videoRefs.current[5] = el)}>
+            <source src={mv4} type="video/mp4" />
+          </video>
           <p>왼다리 2D & 3D</p>
-            <video controls ref={(el) => (videoRefs.current[6] = el)}>
-              <source src={mv5} type="video/mp4" />
-            </video>
-            <video controls ref={(el) => (videoRefs.current[7] = el)}>
-              <source src={mv6} type="video/mp4" />
-            </video>
+          <video controls ref={(el) => (videoRefs.current[6] = el)}>
+            <source src={mv5} type="video/mp4" />
+          </video>
+          <video controls ref={(el) => (videoRefs.current[7] = el)}>
+            <source src={mv6} type="video/mp4" />
+          </video>
           <p>오른다리 2D & 3D</p>
-            <video controls ref={(el) => (videoRefs.current[8] = el)}>
-              <source src={mv7} type="video/mp4" />
-            </video>
-            <video controls ref={(el) => (videoRefs.current[9] = el)}>
-              <source src={mv8} type="video/mp4" />
-            </video>
+          <video controls ref={(el) => (videoRefs.current[8] = el)}>
+            <source src={mv7} type="video/mp4" />
+          </video>
+          <video controls ref={(el) => (videoRefs.current[9] = el)}>
+            <source src={mv8} type="video/mp4" />
+          </video>
         </div>
 
-        
-         {/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡAPI 호출용 코드ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */}
+        {/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡAPI 호출용 코드ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */}
         {/* <p>골프자세 2D & 3D</p>
         <div className="InputAndViewer">
 
@@ -227,17 +222,10 @@ function VideoAnalysis() {
         </div> */}
         {/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡAPI용 코드 여기까지 ㅡㅡㅡㅡㅡㅡㅡㅡㅡ */}
 
-        {/* <button onClick={getApi}>api 호출</button> */}
+        <button onClick={getApi}>api 호출</button>
         <button onClick={playAllVideos}>동시 재생</button>
         <button onClick={pauseAllVideos}>동시 정지</button>
         <button onClick={resetAllVideos}>영상 시간 초기화</button>
-
-        {/* obj 파일 추출 */}
-        {/* <ObjViewer2
-          urls={["http://54.180.245.26/get_file/1/objs/mesh90.obj"]}
-        /> */}
-        {/* <ObjViewer2 urls={objUrls} /> */}
-        {/* <ObjViewer3 urls={objUrls} /> */}
       </div>
     </>
   );
