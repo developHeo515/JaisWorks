@@ -13,14 +13,9 @@
 }
 
 .InputAndViewer {
-  /* position: relative; */
-  display: flex;
+  /* display: flex;
   align-items: center;
-  justify-content: center;
-  /* width: 100%; */
-  /* max-width: 80%; */
-  /* height: 180px; */
-  /* padding-bottom: 56.25%; */
+  justify-content: center; */
 }
 
 .InputAndViewer video {

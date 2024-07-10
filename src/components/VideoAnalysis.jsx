@@ -35,27 +35,26 @@ function VideoAnalysis() {
   // 영상 분석 api 호출
   const getApi = async () => {
     try {
-      console.log("백엔드호출중");
+      // console.log("백엔드호출중 VideoAnalysis");
+      // 여러분이 사용하고자 하는 API 엔드포인트로 대체하세요.
       const response = await axios.get(
         `https://golfposeserver.store/get_json_data/`
       );
       // const response = await axios.get(`http://54.180.245.26/get_json_data/`);
-      // 여러분이 사용하고자 하는 API 엔드포인트로 대체하세요.
 
-      console.log(response.data);
-      // console.log(response.data[1]);
-      // setPose2D(response.data[1].pose2D);
-      // setPose3d(response.data[1].pose3D_270);
-      // setleft_arm_2D(response.data[1].left_arm_2D);
-      // setleft_arm_3D(response.data[1].left_arm_3D);
-      // setright_arm_2D(response.data[1].right_arm_2D);
-      // setright_arm_3D(response.data[1].right_arm_3D);
+      // console.log(response.data);
+      setPose2D(response.data[1].pose2D);
+      setPose3d(response.data[1].pose3D_270);
+      setleft_arm_2D(response.data[1].left_arm_2D);
+      setleft_arm_3D(response.data[1].left_arm_3D);
+      setright_arm_2D(response.data[1].right_arm_2D);
+      setright_arm_3D(response.data[1].right_arm_3D);
 
-      // setleft_leg_2D(response.data[1].left_leg_2D);
-      // setleft_leg_3D(response.data[1].left_leg_3D);
-      // setright_leg_2D(response.data[1].right_leg_2D);
-      // setright_leg_3D(response.data[1].right_leg_3D);
-      console.log("백엔드호출완");
+      setleft_leg_2D(response.data[1].left_leg_2D);
+      setleft_leg_3D(response.data[1].left_leg_3D);
+      setright_leg_2D(response.data[1].right_leg_2D);
+      setright_leg_3D(response.data[1].right_leg_3D);
+      // console.log("백엔드호출완 VideoAnalysis");
       // videoUrl을 사용하여 비디오 재생 또는 다운로드
       //   fetch("http://54.180.245.26/get_video/1/left_arm_3D.mp4/")
       //     .then((response) => response.blob())
@@ -71,7 +70,7 @@ function VideoAnalysis() {
   };
 
   useEffect(() => {
-    // getApi();
+    getApi();
   }, []);
 
   //동영상 동시 재생
@@ -115,20 +114,14 @@ function VideoAnalysis() {
         <button onClick={resetAllVideos}>영상 시간 초기화</button>
         {/* <video className="videoDiv" controls>
           <source src={InputVideo} type="video/mp4" />
-        </video>
-        <video className="videoDiv" controls>
-          <source src={InputVideo} type="video/mp4" />
         </video> */}
 
         {/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ하드코딩용 코드ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ         */}
-        <p>골프자세 2D</p>
+        {/* <p>골프자세 2D</p>
         <div className="InputAndViewer">
           <video controls ref={(el) => (videoRefs.current[0] = el)}>
             <source src={InputVideo} type="video/mp4" />
           </video>
-          {/* <video controls ref={(el) => (videoRefs.current[1] = el)}>
-              <source src={pose3d} type="video/mp4" />
-            </video> */}
         </div>
 
         <div className="AnalysisResult">
@@ -160,12 +153,11 @@ function VideoAnalysis() {
           <video controls ref={(el) => (videoRefs.current[9] = el)}>
             <source src={mv8} type="video/mp4" />
           </video>
-        </div>
+        </div> */}
 
         {/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡAPI 호출용 코드ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */}
-        {/* <p>골프자세 2D & 3D</p>
+        <p>골프자세 2D & 3D</p>
         <div className="InputAndViewer">
-
           {pose2D && (
             <video controls ref={(el) => (videoRefs.current[0] = el)}>
               <source src={pose2D} type="video/mp4" />
@@ -176,7 +168,6 @@ function VideoAnalysis() {
               <source src={pose3d} type="video/mp4" />
             </video>
           )}
-
         </div>
 
         <div className="AnalysisResult">
@@ -224,7 +215,7 @@ function VideoAnalysis() {
               <source src={right_leg_3D} type="video/mp4" />
             </video>
           )}
-        </div> */}
+        </div>
         {/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡAPI용 코드 여기까지 ㅡㅡㅡㅡㅡㅡㅡㅡㅡ */}
 
         <button onClick={getApi}>api 호출</button>

@@ -9,6 +9,7 @@ import "./ObjViewer.css";
 import axios from "axios";
 
 function Model({ url }) {
+  // console.log(url);
   const obj = useLoader(OBJLoader, url);
   const ref = useRef();
 
@@ -62,10 +63,11 @@ export default function ObjViewer() {
       );
       // const response = await axios.get(`http://54.180.245.26/get_json_data/`);
       // 여러분이 사용하고자 하는 API 엔드포인트로 대체하세요.
-      console.log(response.data);
+      // console.log(response.data);
       // console.log(response.data[1].objs);
 
       setObjData(response.data[1].objs);
+
       // console.log("백엔드호출완");
     } catch (error) {
       console.log("백엔드호출실패 ObjViewer.jsx");
@@ -74,7 +76,7 @@ export default function ObjViewer() {
   };
 
   useEffect(() => {
-    // getApi();
+    getApi();
   }, []);
 
   const objUrls = [
@@ -173,11 +175,19 @@ export default function ObjViewer() {
   ];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prevIndex) => (prevIndex + 1) % objUrls.length);
-      //   console.log(index);
-    }, 200); // 0.2초마다 모델을 변경합니다.
-    return () => clearInterval(interval);
+    // console.log("api", objData.length);
+    // console.log("local", objUrls.length);
+
+    if (objUrls.length) {
+      const interval = setInterval(() => {
+        setIndex((prevIndex) => {
+          const newIndex = (prevIndex + 1) % objUrls.length;
+          // console.log(newIndex);
+          return newIndex;
+        });
+      }, 200); // 0.2초마다 모델을 변경합니다.
+      return () => clearInterval(interval);
+    }
   }, [objUrls.length]);
 
   return (

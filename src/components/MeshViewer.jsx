@@ -172,6 +172,7 @@ const MeshViewer = () => {
       sliderRef.current.removeEventListener("input", handleSliderChange);
       renderer.dispose();
       mountRef.current.removeChild(renderer.domElement);
+      <primitive ref={mountRef} object={loader} scale={3} />;
     };
   }, [currentFileIndex]);
 
