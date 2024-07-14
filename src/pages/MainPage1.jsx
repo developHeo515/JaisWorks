@@ -7,7 +7,7 @@ import "./MainPage1.css";
 import ObjViewer from "../components/ObjViewer.jsx";
 import MeshViewer from "../components/MeshViewer.jsx";
 import ObjViewer3 from "../components/ObjViewer3.jsx";
-
+import ObjViewer2 from "../components/ObjViewer2.jsx";
 function MainPage1() {
   return (
     <>
@@ -15,6 +15,7 @@ function MainPage1() {
         <Menubar />
         <VideoAnalysis />
         <ObjViewer />
+        {/* <ObjViewer2 /> */}
 
         {/* <Chatbot /> */}
       </div>
