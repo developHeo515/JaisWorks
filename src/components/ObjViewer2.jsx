@@ -21,53 +21,104 @@ function Model({ url }) {
       const center = box.getCenter(new THREE.Vector3());
       obj.position.sub(center); // Center the model
 
-      // 모델의 머티리얼을 변경하는 코드
-      //   obj.traverse((child) => {
-      //     if (child instanceof THREE.Mesh) {
-      //       // 기존 Geometry를 BufferGeometry로 변환
-      //       const bufferGeometry = new THREE.BufferGeometry().fromGeometry(
-      //         child.geometry
-      //       );
+      // 원하는 위치로 모델 이동 (예: x: 5, y: 0, z: 3)
+      obj.position.add(new THREE.Vector3(0, 0, 0));
 
-      //       // BufferGeometry를 삼각형 기반의 메시로 변경
-      //       bufferGeometry.setAttribute(
-      //         "position",
-      //         new THREE.Float32BufferAttribute(
-      //           bufferGeometry.attributes.position.array,
-      //           3
-      //         )
-      //       );
-      //       bufferGeometry.setIndex(
-      //         new THREE.BufferAttribute(
-      //           new Uint32Array(bufferGeometry.index.array),
-      //           1
-      //         )
-      //       );
-      //       bufferGeometry.computeVertexNormals();
+      // Iterate through the children of the object
+      obj.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          // Ensure geometry is BufferGeometry
+          let bufferGeometry = child.geometry;
+          if (bufferGeometry.type !== "BufferGeometry") {
+            bufferGeometry = new THREE.BufferGeometry().fromGeometry(
+              bufferGeometry
+            );
+          }
 
-      //       // 새로운 머티리얼 적용
-      //       const material = new THREE.MeshPhysicalMaterial({
-      //         color: new THREE.Color(0xff6347), // 토마토 색상
-      //         metalness: 0.7, // 금속성
-      //         roughness: 0.2, // 거칠기
-      //         reflectivity: 0.5, // 반사율
-      //         clearcoat: 1.0, // 클리어 코트 (추가 반사층)
-      //         clearcoatRoughness: 0.1, // 클리어 코트 거칠기
-      //         side: THREE.DoubleSide, // 양면 렌더링
-      //       });
+          // Update material to highlight the triangular facets
+          const material = new THREE.MeshPhysicalMaterial({
+            color: new THREE.Color(0xffffff), // Tomato color
+            // metalness: 0.7,
+            roughness: 0.2,
+            reflectivity: 0.5,
+            clearcoat: 1.0,
+            clearcoatRoughness: 0.1,
+            side: THREE.DoubleSide,
+            flatShading: true, // Use flat shading to emphasize the triangular facets
+          });
 
-      //       // 새 메시 생성
-      //       const newMesh = new THREE.Mesh(bufferGeometry, material);
-
-      //       // 기존 자식 제거 후 새 메시 추가
-      //       obj.remove(child);
-      //       obj.add(newMesh);
-      //     }
-      //   });
+          child.geometry = bufferGeometry;
+          child.material = material;
+        }
+      });
     }
   }, [obj]);
 
   return <primitive ref={ref} object={obj} scale={3} />;
+}
+
+function AxesHelper({ size }) {
+  const { scene } = useThree();
+  useEffect(() => {
+    const axesHelper = new THREE.AxesHelper(size);
+    scene.add(axesHelper);
+    return () => {
+      scene.remove(axesHelper);
+    };
+  }, [scene, size]);
+  return null;
+}
+
+function GridHelper({ size, divisions }) {
+  const { scene } = useThree();
+  useEffect(() => {
+    const gridHelperXY = new THREE.GridHelper(size, divisions);
+    gridHelperXY.rotation.x = Math.PI / 2;
+    gridHelperXY.position.set(0, 0, -5); // 원하는 위치로 변경
+    scene.add(gridHelperXY);
+
+    const gridHelperXZ = new THREE.GridHelper(size, divisions);
+    gridHelperXZ.position.set(0, -5, 0); // 원하는 위치로 변경
+    scene.add(gridHelperXZ);
+
+    const gridHelperYZ = new THREE.GridHelper(size, divisions);
+    gridHelperYZ.rotation.z = Math.PI / 2;
+    gridHelperYZ.position.set(-5, 0, 0); // 원하는 위치로 변경
+    scene.add(gridHelperYZ);
+
+    // const gridHelperXY2 = new THREE.GridHelper(size, divisions);
+    // gridHelperXY2.rotation.x = Math.PI / 2;
+    // gridHelperXY2.position.set(0, 0, 5); // 원하는 위치로 변경
+    // scene.add(gridHelperXY2);
+
+    // const gridHelperYZ2 = new THREE.GridHelper(size, divisions);
+    // gridHelperYZ2.rotation.z = Math.PI / 2;
+    // gridHelperYZ2.position.set(5, 0, 0); // 원하는 위치로 변경
+    // scene.add(gridHelperYZ2);
+
+    return () => {
+      scene.remove(gridHelperXY);
+      scene.remove(gridHelperXZ);
+      scene.remove(gridHelperYZ);
+    };
+  }, [scene, size, divisions]);
+  return null;
+}
+
+function AxisLabels() {
+  return (
+    <>
+      <Text position={[5, 0, 0]} fontSize={0.5} color="red">
+        X
+      </Text>
+      <Text position={[0, 5, 0]} fontSize={0.5} color="green">
+        Y
+      </Text>
+      <Text position={[0, 0, 5]} fontSize={0.5} color="blue">
+        Z
+      </Text>
+    </>
+  );
 }
 
 export default function ObjViewer() {
@@ -81,6 +132,10 @@ export default function ObjViewer() {
       const response = await axios.get(
         `https://golfposeserver.store/get_json_data/`
       );
+      // const response = await axios.get(`http://54.180.245.26/get_json_data/`);
+      // 여러분이 사용하고자 하는 API 엔드포인트로 대체하세요.
+      // console.log(response.data);
+      // console.log(response.data[1].objs);
 
       setObjData(response.data[1].objs);
 
@@ -224,11 +279,10 @@ export default function ObjViewer() {
         />
         {/* x, y, z축을 그려줌 */}
         {/* <axesHelper args={[10, 10, 10]} /> */}
-        {/* <AxesHelper size={5} />
+        <AxesHelper size={5} />
         <GridHelper size={10} divisions={10} />
-        <AxisLabels /> */}
+        <AxisLabels />
         {/* 여기서 Obj 파일 받아서 시각화 시켜줌 */}
-        <meshBasicMaterial color="#ffff00" />
         <Model url={objUrls[index]} />
       </Canvas>
     </div>

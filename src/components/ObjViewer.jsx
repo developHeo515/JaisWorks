@@ -24,15 +24,33 @@ function Model({ url }) {
       // 원하는 위치로 모델 이동 (예: x: 5, y: 0, z: 3)
       obj.position.add(new THREE.Vector3(0, 0, 0));
 
-      // obj.traverse((child) => {
-      //   if (child instanceof THREE.Mesh) {
-      //     child.material = new THREE.MeshStandardMaterial({
-      //       color: new THREE.Color(0x0055ff), // 원하는 색상
-      //       metalness: 0.5,
-      //       roughness: 0.5,
-      //     });
-      //   }
-      // });
+      // Iterate through the children of the object
+      obj.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          // Ensure geometry is BufferGeometry
+          let bufferGeometry = child.geometry;
+          if (bufferGeometry.type !== "BufferGeometry") {
+            bufferGeometry = new THREE.BufferGeometry().fromGeometry(
+              bufferGeometry
+            );
+          }
+
+          // Update material to highlight the triangular facets
+          const material = new THREE.MeshPhysicalMaterial({
+            color: new THREE.Color(0xffffff), // Tomato color
+            // metalness: 0.7,
+            roughness: 0.2,
+            reflectivity: 0.5,
+            clearcoat: 1.0,
+            clearcoatRoughness: 0.1,
+            side: THREE.DoubleSide,
+            flatShading: true, // Use flat shading to emphasize the triangular facets
+          });
+
+          child.geometry = bufferGeometry;
+          child.material = material;
+        }
+      });
     }
   }, [obj]);
 
