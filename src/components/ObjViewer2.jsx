@@ -10,11 +10,9 @@ import "./ObjViewer.css";
 import axios from "axios";
 
 function Model({ url }) {
-  // console.log(url);
   const obj = useLoader(OBJLoader, url);
   const ref = useRef();
 
-  //중심축 이동 코드
   useEffect(() => {
     if (obj) {
       const box = new THREE.Box3().setFromObject(obj);
@@ -37,11 +35,11 @@ function Model({ url }) {
 
           // Update material to highlight the triangular facets
           const material = new THREE.MeshPhysicalMaterial({
-            color: new THREE.Color(0xffffff), // Tomato color
-            // metalness: 0.7,
-            roughness: 0.2,
-            reflectivity: 0.5,
-            clearcoat: 1.0,
+            color: new THREE.Color(0xffffff),
+            // metalness: 0.9, // Increase metalness for a more reflective surface
+            roughness: 0.1, // Decrease roughness for a smoother surface
+            reflectivity: 1.0, // Increase reflectivity for more pronounced reflections
+            clearcoat: 1.0, // Add a clear coat for an extra layer of reflection
             clearcoatRoughness: 0.1,
             side: THREE.DoubleSide,
             flatShading: true, // Use flat shading to emphasize the triangular facets
@@ -54,7 +52,7 @@ function Model({ url }) {
     }
   }, [obj]);
 
-  return <primitive ref={ref} object={obj} scale={3} />;
+  return <primitive ref={ref} object={obj} scale={5} castShadow />;
 }
 
 function AxesHelper({ size }) {
@@ -86,15 +84,15 @@ function GridHelper({ size, divisions }) {
     gridHelperYZ.position.set(-5, 0, 0); // 원하는 위치로 변경
     scene.add(gridHelperYZ);
 
-    // const gridHelperXY2 = new THREE.GridHelper(size, divisions);
-    // gridHelperXY2.rotation.x = Math.PI / 2;
-    // gridHelperXY2.position.set(0, 0, 5); // 원하는 위치로 변경
-    // scene.add(gridHelperXY2);
+    const gridHelperXY2 = new THREE.GridHelper(size, divisions);
+    gridHelperXY2.rotation.x = Math.PI / 2;
+    gridHelperXY2.position.set(0, 0, 5); // 원하는 위치로 변경
+    scene.add(gridHelperXY2);
 
-    // const gridHelperYZ2 = new THREE.GridHelper(size, divisions);
-    // gridHelperYZ2.rotation.z = Math.PI / 2;
-    // gridHelperYZ2.position.set(5, 0, 0); // 원하는 위치로 변경
-    // scene.add(gridHelperYZ2);
+    const gridHelperYZ2 = new THREE.GridHelper(size, divisions);
+    gridHelperYZ2.rotation.z = Math.PI / 2;
+    gridHelperYZ2.position.set(5, 0, 0); // 원하는 위치로 변경
+    scene.add(gridHelperYZ2);
 
     return () => {
       scene.remove(gridHelperXY);
@@ -265,25 +263,35 @@ export default function ObjViewer() {
     <div className="ObjViewer">
       <p>3D 아바타를 클릭 후 움직여 보세요</p>
       {/*  style={{ width: "20%", height: "50vh" }} */}
-      <Canvas>
-        {/* 주변 조명으로, 장면 전체를 고르게 비춥니다. */}
+      <Canvas shadows>
         <ambientLight intensity={0.5} />
-        {/* 스포트라이트 조명 */}
-        {/* <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} /> */}
-        {/* 점 조명으로, 특정 지점에서 모든 방향으로 빛을 방출 */}
-        {/* <pointLight position={[-10, -10, -10]} /> */}
-        <OrbitControls
-        //   camera={cameraRef.current}
-        // makeDefault={true}
-        // enableZoom={false}
+        <directionalLight
+          castShadow
+          position={[10, 10, 10]}
+          intensity={1.0}
+          shadow-mapSize-width={1024}
+          shadow-mapSize-height={1024}
         />
-        {/* x, y, z축을 그려줌 */}
-        {/* <axesHelper args={[10, 10, 10]} /> */}
+        <directionalLight
+          castShadow
+          position={[-10, -10, -10]}
+          intensity={0.5}
+          shadow-mapSize-width={1024}
+          shadow-mapSize-height={1024}
+        />
+        <OrbitControls />
         <AxesHelper size={5} />
         <GridHelper size={10} divisions={10} />
         <AxisLabels />
-        {/* 여기서 Obj 파일 받아서 시각화 시켜줌 */}
         <Model url={objData[index]} />
+        <mesh
+          receiveShadow
+          position={[0, -3, 0]}
+          rotation={[-Math.PI / 2, 0, 0]}
+        >
+          {/* <planeBufferGeometry attach="geometry" args={[500, 500]} /> */}
+          <shadowMaterial attach="material" opacity={0.5} />
+        </mesh>
       </Canvas>
     </div>
   );

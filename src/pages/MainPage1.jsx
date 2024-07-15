@@ -14,8 +14,8 @@ function MainPage1() {
       <div className="MainPage1">
         <Menubar />
         <VideoAnalysis />
-        <ObjViewer />
-        {/* <ObjViewer2 /> */}
+        {/* <ObjViewer /> */}
+        <ObjViewer2 />
 
         {/* <Chatbot /> */}
       </div>
