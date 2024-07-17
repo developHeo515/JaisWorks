@@ -8,6 +8,7 @@ import ObjViewer from "../components/ObjViewer.jsx";
 import MeshViewer from "../components/MeshViewer.jsx";
 import ObjViewer3 from "../components/ObjViewer3.jsx";
 import ObjViewer2 from "../components/ObjViewer2.jsx";
+import GlbViewer from "../components/GlbViewer.jsx";
 function MainPage1() {
   return (
     <>
@@ -15,7 +16,8 @@ function MainPage1() {
         <Menubar />
         <VideoAnalysis />
         {/* <ObjViewer /> */}
-        <ObjViewer2 />
+        {/* <ObjViewer2 /> */}
+        <GlbViewer />
 
         {/* <Chatbot /> */}
       </div>

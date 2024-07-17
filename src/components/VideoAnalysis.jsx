@@ -35,14 +35,14 @@ function VideoAnalysis() {
   // 영상 분석 api 호출
   const getApi = async () => {
     try {
-      console.log("백엔드호출중 VideoAnalysis");
+      // console.log("백엔드호출중 VideoAnalysis");
       // 여러분이 사용하고자 하는 API 엔드포인트로 대체하세요.
       const response = await axios.get(
         `https://golfposeserver.store/get_json_data/`
       );
       // const response = await axios.get(`http://54.180.245.26/get_json_data/`);
 
-      console.log(response.data);
+      // console.log(response.data);
       setPose2D(response.data[1].pose2D);
       setPose3d(response.data[1].pose3D_270);
       setleft_arm_2D(response.data[1].left_arm_2D);
@@ -54,7 +54,7 @@ function VideoAnalysis() {
       setleft_leg_3D(response.data[1].left_leg_3D);
       setright_leg_2D(response.data[1].right_leg_2D);
       setright_leg_3D(response.data[1].right_leg_3D);
-      console.log("백엔드호출완 VideoAnalysis");
+      // console.log("백엔드호출완 VideoAnalysis");
       // videoUrl을 사용하여 비디오 재생 또는 다운로드
       //   fetch("http://54.180.245.26/get_video/1/left_arm_3D.mp4/")
       //     .then((response) => response.blob())
