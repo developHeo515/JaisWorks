@@ -42,3 +42,19 @@
   /* align-items: center;
     justify-content: center; */
 }
+
+.exampleImg {
+  width: 200px;
+  height: 200px;
+  margin-left: 30px;
+  margin-bottom: 30px;
+}
+
+.selectVideo {
+  width: 826px;
+}
+
+.numTag {
+  margin-left: 30px;
+  width: 200px;
+}

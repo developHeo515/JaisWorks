@@ -1,6 +1,6 @@
 // Obj 파일 뷰어 완성
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense, useMemo } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls, Text, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
@@ -13,6 +13,9 @@ function Model({ url }) {
 
   useEffect(() => {
     if (scene) {
+      // 모델을 오른쪽으로 90도 회전시킴
+      scene.rotation.y = Math.PI;
+
       const box = new THREE.Box3().setFromObject(scene);
       const center = box.getCenter(new THREE.Vector3());
       scene.position.sub(center); // Center the model
@@ -115,6 +118,7 @@ function AxisLabels() {
 export default function GlbViewer() {
   const [index, setIndex] = useState(0);
   const [objData, setObjData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // 영상 분석 api 호출
   const getApi = async () => {
@@ -128,11 +132,13 @@ export default function GlbViewer() {
       console.log(response.data);
       // console.log(response.data[1].glbs);
 
-      setObjData(response.data[1].glbs);
+      setObjData(response.data[3].glbs);
       //   console.log("백엔드호출완 GlbViewer.jsx");
     } catch (error) {
       console.log("백엔드호출실패 GlbViewer.jsx");
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -141,20 +147,24 @@ export default function GlbViewer() {
   }, []);
 
   useEffect(() => {
-    // console.log("api", objData.length);
+    console.log("api", objData.length);
     // console.log("local", objUrls.length);
 
     if (objData.length) {
       const interval = setInterval(() => {
         setIndex((prevIndex) => {
           const newIndex = (prevIndex + 1) % objData.length;
-          // console.log(newIndex);
+          console.log(newIndex);
           return newIndex;
         });
       }, 200); // 0.02초마다 모델을 변경합니다.
       return () => clearInterval(interval);
     }
   }, [objData.length]);
+
+  const MemoizedModel = useMemo(() => {
+    return <Model url={objData[index]} />;
+  }, [objData, index]);
 
   return (
     <div className="ObjViewer">
@@ -180,7 +190,12 @@ export default function GlbViewer() {
         <AxesHelper size={5} />
         <GridHelper size={10} divisions={10} />
         <AxisLabels />
-        {objData.length > 0 && <Model url={objData[index]} />}
+        {objData.length > 0 && (
+          <Suspense fallback={null}>
+            {!loading && objData.length > 0 && MemoizedModel}
+            {/* <Model url={objData[index]} /> */}
+          </Suspense>
+        )}
         {/* <Model url={objData[index]} /> */}
         <mesh
           receiveShadow

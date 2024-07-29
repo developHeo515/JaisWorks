@@ -1,6 +1,6 @@
 // Obj 파일 뷰어 완성
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo, Suspense } from "react";
 import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
 import { OrbitControls, Text } from "@react-three/drei";
 // import { OrbitControls, GridHelper, AxesHelper } from "@react-three/drei";
@@ -20,7 +20,9 @@ function Model({ url }) {
       obj.position.sub(center); // Center the model
 
       // 원하는 위치로 모델 이동 (예: x: 5, y: 0, z: 3)
-      obj.position.add(new THREE.Vector3(0, 0, 0));
+      // obj.position.add(new THREE.Vector3(0, 0, 0));
+      // 모델을 오른쪽으로 90도 회전시킴
+      obj.rotation.y = Math.PI / 2;
 
       // Iterate through the children of the object
       obj.traverse((child) => {
@@ -52,7 +54,7 @@ function Model({ url }) {
     }
   }, [obj]);
 
-  return <primitive ref={ref} object={obj} scale={5} castShadow />;
+  return <primitive ref={ref} object={obj} scale={5} />;
 }
 
 function AxesHelper({ size }) {
@@ -84,15 +86,15 @@ function GridHelper({ size, divisions }) {
     gridHelperYZ.position.set(-5, 0, 0); // 원하는 위치로 변경
     scene.add(gridHelperYZ);
 
-    const gridHelperXY2 = new THREE.GridHelper(size, divisions);
-    gridHelperXY2.rotation.x = Math.PI / 2;
-    gridHelperXY2.position.set(0, 0, 5); // 원하는 위치로 변경
-    scene.add(gridHelperXY2);
+    // const gridHelperXY2 = new THREE.GridHelper(size, divisions);
+    // gridHelperXY2.rotation.x = Math.PI / 2;
+    // gridHelperXY2.position.set(0, 0, 5); // 원하는 위치로 변경
+    // scene.add(gridHelperXY2);
 
-    const gridHelperYZ2 = new THREE.GridHelper(size, divisions);
-    gridHelperYZ2.rotation.z = Math.PI / 2;
-    gridHelperYZ2.position.set(5, 0, 0); // 원하는 위치로 변경
-    scene.add(gridHelperYZ2);
+    // const gridHelperYZ2 = new THREE.GridHelper(size, divisions);
+    // gridHelperYZ2.rotation.z = Math.PI / 2;
+    // gridHelperYZ2.position.set(5, 0, 0); // 원하는 위치로 변경
+    // scene.add(gridHelperYZ2);
 
     return () => {
       scene.remove(gridHelperXY);
@@ -122,6 +124,7 @@ function AxisLabels() {
 export default function ObjViewer() {
   const [index, setIndex] = useState(0);
   const [objData, setObjData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // 영상 분석 api 호출
   const getApi = async () => {
@@ -141,6 +144,8 @@ export default function ObjViewer() {
     } catch (error) {
       console.log("백엔드호출실패 ObjViewer2.jsx");
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -148,122 +153,125 @@ export default function ObjViewer() {
     getApi();
   }, []);
 
-  // const objUrls = [
-  //   "/obj/mesh90.obj",
-  //   "/obj/mesh0.obj",
-  //   "/obj/mesh1.obj",
-  //   "/obj/mesh2.obj",
-  //   "/obj/mesh3.obj",
-  //   "/obj/mesh4.obj",
-  //   "/obj/mesh5.obj",
-  //   "/obj/mesh6.obj",
-  //   "/obj/mesh7.obj",
-  //   "/obj/mesh8.obj",
-  //   "/obj/mesh9.obj",
-  //   "/obj/mesh10.obj",
-  //   "/obj/mesh11.obj",
-  //   "/obj/mesh12.obj",
-  //   "/obj/mesh13.obj",
-  //   "/obj/mesh14.obj",
-  //   "/obj/mesh15.obj",
-  //   "/obj/mesh16.obj",
-  //   "/obj/mesh17.obj",
-  //   "/obj/mesh18.obj",
-  //   "/obj/mesh19.obj",
-  //   "/obj/mesh20.obj",
-  //   "/obj/mesh21.obj",
-  //   "/obj/mesh22.obj",
-  //   "/obj/mesh23.obj",
-  //   "/obj/mesh24.obj",
-  //   "/obj/mesh25.obj",
-  //   "/obj/mesh26.obj",
-  //   "/obj/mesh27.obj",
-  //   "/obj/mesh28.obj",
-  //   "/obj/mesh29.obj",
-  //   "/obj/mesh30.obj",
-  //   "/obj/mesh31.obj",
-  //   "/obj/mesh32.obj",
-  //   "/obj/mesh33.obj",
-  //   "/obj/mesh34.obj",
-  //   "/obj/mesh35.obj",
-  //   "/obj/mesh36.obj",
-  //   "/obj/mesh37.obj",
-  //   "/obj/mesh38.obj",
-  //   "/obj/mesh39.obj",
-  //   "/obj/mesh40.obj",
-  //   "/obj/mesh41.obj",
-  //   "/obj/mesh42.obj",
-  //   "/obj/mesh43.obj",
-  //   "/obj/mesh44.obj",
-  //   "/obj/mesh45.obj",
-  //   "/obj/mesh46.obj",
-  //   "/obj/mesh47.obj",
-  //   "/obj/mesh48.obj",
-  //   "/obj/mesh49.obj",
-  //   "/obj/mesh50.obj",
-  //   "/obj/mesh51.obj",
-  //   "/obj/mesh52.obj",
-  //   "/obj/mesh53.obj",
-  //   "/obj/mesh54.obj",
-  //   "/obj/mesh55.obj",
-  //   "/obj/mesh56.obj",
-  //   "/obj/mesh57.obj",
-  //   "/obj/mesh58.obj",
-  //   "/obj/mesh59.obj",
-  //   "/obj/mesh60.obj",
-  //   "/obj/mesh61.obj",
-  //   "/obj/mesh62.obj",
-  //   "/obj/mesh63.obj",
-  //   "/obj/mesh64.obj",
-  //   "/obj/mesh65.obj",
-  //   "/obj/mesh66.obj",
-  //   "/obj/mesh67.obj",
-  //   "/obj/mesh68.obj",
-  //   "/obj/mesh69.obj",
-  //   "/obj/mesh70.obj",
-  //   "/obj/mesh71.obj",
-  //   "/obj/mesh72.obj",
-  //   "/obj/mesh73.obj",
-  //   "/obj/mesh74.obj",
-  //   "/obj/mesh75.obj",
-  //   "/obj/mesh76.obj",
-  //   "/obj/mesh77.obj",
-  //   "/obj/mesh78.obj",
-  //   "/obj/mesh79.obj",
-  //   "/obj/mesh80.obj",
-  //   "/obj/mesh81.obj",
-  //   "/obj/mesh82.obj",
-  //   "/obj/mesh83.obj",
-  //   "/obj/mesh84.obj",
-  //   "/obj/mesh85.obj",
-  //   "/obj/mesh86.obj",
-  //   "/obj/mesh87.obj",
-  //   "/obj/mesh88.obj",
-  //   "/obj/mesh89.obj",
-  //   "/obj/mesh90.obj",
-  // ];
+  const objUrls = [
+    "/obj/mesh0.obj",
+    "/obj/mesh1.obj",
+    "/obj/mesh2.obj",
+    "/obj/mesh3.obj",
+    "/obj/mesh4.obj",
+    "/obj/mesh5.obj",
+    "/obj/mesh6.obj",
+    "/obj/mesh7.obj",
+    "/obj/mesh8.obj",
+    "/obj/mesh9.obj",
+    "/obj/mesh10.obj",
+    "/obj/mesh11.obj",
+    "/obj/mesh12.obj",
+    "/obj/mesh13.obj",
+    "/obj/mesh14.obj",
+    "/obj/mesh15.obj",
+    "/obj/mesh16.obj",
+    "/obj/mesh17.obj",
+    "/obj/mesh18.obj",
+    "/obj/mesh19.obj",
+    "/obj/mesh20.obj",
+    "/obj/mesh21.obj",
+    "/obj/mesh22.obj",
+    "/obj/mesh23.obj",
+    "/obj/mesh24.obj",
+    "/obj/mesh25.obj",
+    "/obj/mesh26.obj",
+    "/obj/mesh27.obj",
+    "/obj/mesh28.obj",
+    "/obj/mesh29.obj",
+    "/obj/mesh30.obj",
+    "/obj/mesh31.obj",
+    "/obj/mesh32.obj",
+    "/obj/mesh33.obj",
+    "/obj/mesh34.obj",
+    "/obj/mesh35.obj",
+    "/obj/mesh36.obj",
+    "/obj/mesh37.obj",
+    "/obj/mesh38.obj",
+    "/obj/mesh39.obj",
+    "/obj/mesh40.obj",
+    "/obj/mesh41.obj",
+    "/obj/mesh42.obj",
+    "/obj/mesh43.obj",
+    "/obj/mesh44.obj",
+    "/obj/mesh45.obj",
+    "/obj/mesh46.obj",
+    "/obj/mesh47.obj",
+    "/obj/mesh48.obj",
+    "/obj/mesh49.obj",
+    "/obj/mesh50.obj",
+    "/obj/mesh51.obj",
+    "/obj/mesh52.obj",
+    "/obj/mesh53.obj",
+    "/obj/mesh54.obj",
+    "/obj/mesh55.obj",
+    "/obj/mesh56.obj",
+    "/obj/mesh57.obj",
+    "/obj/mesh58.obj",
+    "/obj/mesh59.obj",
+    "/obj/mesh60.obj",
+    "/obj/mesh61.obj",
+    "/obj/mesh62.obj",
+    "/obj/mesh63.obj",
+    "/obj/mesh64.obj",
+    "/obj/mesh65.obj",
+    "/obj/mesh66.obj",
+    "/obj/mesh67.obj",
+    "/obj/mesh68.obj",
+    "/obj/mesh69.obj",
+    "/obj/mesh70.obj",
+    "/obj/mesh71.obj",
+    "/obj/mesh72.obj",
+    "/obj/mesh73.obj",
+    "/obj/mesh74.obj",
+    "/obj/mesh75.obj",
+    "/obj/mesh76.obj",
+    "/obj/mesh77.obj",
+    "/obj/mesh78.obj",
+    "/obj/mesh79.obj",
+    "/obj/mesh80.obj",
+    "/obj/mesh81.obj",
+    "/obj/mesh82.obj",
+    "/obj/mesh83.obj",
+    "/obj/mesh84.obj",
+    "/obj/mesh85.obj",
+    "/obj/mesh86.obj",
+    "/obj/mesh87.obj",
+    "/obj/mesh88.obj",
+    "/obj/mesh89.obj",
+    "/obj/mesh90.obj",
+  ];
 
   useEffect(() => {
-    // console.log("api", objData.length);
+    console.log("api", objData.length);
     // console.log("local", objUrls.length);
 
     if (objData.length) {
       const interval = setInterval(() => {
         setIndex((prevIndex) => {
           const newIndex = (prevIndex + 1) % objData.length;
-          // console.log(newIndex);
+          console.log(newIndex);
           return newIndex;
         });
-      }, 100); // 0.1초마다 모델을 변경합니다.
+      }, 200); // 0.2초마다 모델을 변경합니다.
       return () => clearInterval(interval);
     }
   }, [objData.length]);
+
+  const MemoizedModel = useMemo(() => {
+    return <Model url={objData[index]} />;
+  }, [objData, index]);
 
   return (
     <div className="ObjViewer">
       <p>3D 아바타를 클릭 후 움직여 보세요</p>
       {/*  style={{ width: "20%", height: "50vh" }} */}
-      <Canvas shadows>
+      <Canvas>
         <ambientLight intensity={0.5} />
         <directionalLight
           castShadow
@@ -283,7 +291,10 @@ export default function ObjViewer() {
         <AxesHelper size={5} />
         <GridHelper size={10} divisions={10} />
         <AxisLabels />
-        {objData.length > 0 && <Model url={objData[index]} />}
+        {/* {objData.length > 0 && <Model url={objData[index]} />} */}
+        {/* <Suspense fallback={<div>Loading...</div>}> */}
+        {!loading && objData.length > 0 && MemoizedModel}
+        {/* </Suspense> */}
         <mesh
           receiveShadow
           position={[0, -3, 0]}

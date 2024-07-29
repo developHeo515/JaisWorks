@@ -2,12 +2,29 @@
 .ObjViewer {
   width: 30%;
   height: 80vh;
+  height: 650px;
+
+  /* width: 55%;
+  padding-left: 10px;
+  padding-right: 10px;
+  overflow: auto;
+  height: 650px; */
   /* display: flex; */
   /* align-items: center; */
   /* justify-content: center; */
 }
 
-.ObjViewer p {
+.ObjViewer Canvas {
+  width: 50%;
+  height: 100%;
+  /* margin-right: 20px; */
+}
+
+.ObjViewer video {
   /* 수평 중앙 정렬하기 */
   text-align: center;
+
+  width: 50%;
+  height: 50%;
+  /* margin-right: 20px; */
 }

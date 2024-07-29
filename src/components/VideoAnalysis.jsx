@@ -1,4 +1,4 @@
-import movie from "/videos/movie.mp4";
+// import movie from "/videos/movie.mp4";
 import InputVideo from "../assets/video/2D.mp4";
 import mv1 from "../assets/video/3.2D_angle_animation_label_leftarm.mp4";
 import mv2 from "../assets/video/7.3D_angle_animation_label_leftarm.mp4";
@@ -16,7 +16,8 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./VideoAnalysis.css";
 
-function VideoAnalysis() {
+function VideoAnalysis(props) {
+  const ex = props.ex;
   const [videoUrl, setVideoUrl] = useState("");
   const [objData, setObjData] = useState([]);
 
@@ -43,17 +44,17 @@ function VideoAnalysis() {
       // const response = await axios.get(`http://54.180.245.26/get_json_data/`);
 
       // console.log(response.data);
-      setPose2D(response.data[1].pose2D);
-      setPose3d(response.data[1].pose3D_270);
-      setleft_arm_2D(response.data[1].left_arm_2D);
-      setleft_arm_3D(response.data[1].left_arm_3D);
-      setright_arm_2D(response.data[1].right_arm_2D);
-      setright_arm_3D(response.data[1].right_arm_3D);
+      setPose2D(response.data[ex].pose2D);
+      setPose3d(response.data[ex].pose3D_270);
+      setleft_arm_2D(response.data[ex].left_arm_2D);
+      setleft_arm_3D(response.data[ex].left_arm_3D);
+      setright_arm_2D(response.data[ex].right_arm_2D);
+      setright_arm_3D(response.data[ex].right_arm_3D);
 
-      setleft_leg_2D(response.data[1].left_leg_2D);
-      setleft_leg_3D(response.data[1].left_leg_3D);
-      setright_leg_2D(response.data[1].right_leg_2D);
-      setright_leg_3D(response.data[1].right_leg_3D);
+      setleft_leg_2D(response.data[ex].left_leg_2D);
+      setleft_leg_3D(response.data[ex].left_leg_3D);
+      setright_leg_2D(response.data[ex].right_leg_2D);
+      setright_leg_3D(response.data[ex].right_leg_3D);
       // console.log("백엔드호출완 VideoAnalysis");
       // videoUrl을 사용하여 비디오 재생 또는 다운로드
       //   fetch("http://54.180.245.26/get_video/1/left_arm_3D.mp4/")
