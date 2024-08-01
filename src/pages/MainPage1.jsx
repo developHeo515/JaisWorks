@@ -11,65 +11,67 @@ import ObjViewer2 from "../components/ObjViewer2.jsx";
 import GlbViewer from "../components/GlbViewer.jsx";
 import Example from "../components/Example.jsx";
 import { useNavigate } from "react-router";
+import React, { useState } from "react";
 // import img from "/images/1.PNG";
 // import img from "../../public/images/1.PNG";
 
 function MainPage1() {
   const navigate = useNavigate();
+  const [videoState, setVideoState] = useState(false);
+  const [num, setNum] = useState(0);
+
+  const videoSelect = (n) => {
+    setNum(n);
+    // console.log(num);
+    setVideoState(true);
+  };
 
   return (
     <>
-      <div className="MainPage1">
-        <Menubar />
-        <div className="selectVideo">
-          {/* <p className="numTag">1</p> */}
-          <img
-            className="exampleImg"
-            src="/images/1.PNG"
-            onClick={() => {
-              navigate("/Example", { state: { props: 1 } });
-            }}
-          />
-          {/* <p className="numTag">5</p> */}
-          <img
-            className="exampleImg"
-            src="/images/5.PNG"
-            onClick={() => {
-              navigate("/Example", { state: { props: 5 } });
-            }}
-          />
-          {/* <p className="numTag">23</p> */}
-          <img
-            className="exampleImg"
-            src="/images/23.PNG"
-            onClick={() => {
-              navigate("/Example", { state: { props: 23 } });
-            }}
-          />
-          {/* <p className="numTag">27</p> */}
-          <img
-            className="exampleImg"
-            src="/images/27.PNG"
-            onClick={() => {
-              navigate("/Example", { state: { props: 27 } });
-            }}
-          />
-          {/* <p className="numTag">35</p> */}
-          <img
-            className="exampleImg"
-            src="/images/35.PNG"
-            onClick={() => {
-              navigate("/Example", { state: { props: 35 } });
-            }}
-          />
+      {!videoState ? (
+        <div className="MainPage1">
+          <Menubar />
+          <div className="selectVideo">
+            {/* <p className="numTag">1</p> */}
+            <img
+              className="exampleImg"
+              src="/images/1.PNG"
+              onClick={() => videoSelect(1)}
+            />
+            {/* <p className="numTag">5</p> */}
+            <img
+              className="exampleImg"
+              src="/images/5.PNG"
+              onClick={() => videoSelect(2)}
+            />
+            {/* <p className="numTag">23</p> */}
+            <img
+              className="exampleImg"
+              src="/images/23.PNG"
+              onClick={() => videoSelect(3)}
+            />
+            {/* <p className="numTag">27</p> */}
+            <img
+              className="exampleImg"
+              src="/images/27.PNG"
+              onClick={() => videoSelect(4)}
+            />
+            {/* <p className="numTag">35</p> */}
+            <img
+              className="exampleImg"
+              src="/images/35.PNG"
+              onClick={() => videoSelect(5)}
+            />
+          </div>
         </div>
-
-        {/* <VideoAnalysis /> */}
-        {/* <ObjViewer /> */}
-        {/* <ObjViewer2 /> */}
-        {/* <GlbViewer /> */}
-        {/* <Chatbot /> */}
-      </div>
+      ) : (
+        <div className="MainPage1">
+          <Menubar />
+          {console.log(num)}
+          <VideoAnalysis ex={num} />
+          <ObjViewer ex={num} />
+        </div>
+      )}
     </>
   );
 }
