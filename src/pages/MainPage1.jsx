@@ -42,25 +42,25 @@ function MainPage1() {
             <img
               className="exampleImg"
               src="/images/5.PNG"
-              onClick={() => videoSelect(2)}
+              onClick={() => videoSelect(5)}
             />
             {/* <p className="numTag">23</p> */}
             <img
               className="exampleImg"
               src="/images/23.PNG"
-              onClick={() => videoSelect(3)}
+              onClick={() => videoSelect(23)}
             />
             {/* <p className="numTag">27</p> */}
             <img
               className="exampleImg"
               src="/images/27.PNG"
-              onClick={() => videoSelect(4)}
+              onClick={() => videoSelect(27)}
             />
             {/* <p className="numTag">35</p> */}
             <img
               className="exampleImg"
               src="/images/35.PNG"
-              onClick={() => videoSelect(5)}
+              onClick={() => videoSelect(69)}
             />
           </div>
         </div>
