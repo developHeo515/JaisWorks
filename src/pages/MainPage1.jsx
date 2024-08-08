@@ -18,7 +18,7 @@ import React, { useState } from "react";
 function MainPage1() {
   const navigate = useNavigate();
   const [videoState, setVideoState] = useState(false);
-  const [num, setNum] = useState(0);
+  const [num, setNum] = useState(2);
 
   const videoSelect = (n) => {
     setNum(n);
@@ -28,35 +28,36 @@ function MainPage1() {
 
   return (
     <>
+      {/* <div className="MainPage1">
+        <Menubar />
+        <VideoAnalysis ex={num} />
+        <ObjViewer ex={num} />
+        <ObjViewer3 ex={num} />
+      </div> */}
       {!videoState ? (
         <div className="MainPage1">
           <Menubar />
           <div className="selectVideo">
-            {/* <p className="numTag">1</p> */}
             <img
               className="exampleImg"
               src="/images/1.PNG"
               onClick={() => videoSelect(1)}
             />
-            {/* <p className="numTag">5</p> */}
             <img
               className="exampleImg"
               src="/images/5.PNG"
               onClick={() => videoSelect(5)}
             />
-            {/* <p className="numTag">23</p> */}
             <img
               className="exampleImg"
               src="/images/23.PNG"
               onClick={() => videoSelect(23)}
             />
-            {/* <p className="numTag">27</p> */}
             <img
               className="exampleImg"
               src="/images/27.PNG"
               onClick={() => videoSelect(27)}
             />
-            {/* <p className="numTag">35</p> */}
             <img
               className="exampleImg"
               src="/images/35.PNG"

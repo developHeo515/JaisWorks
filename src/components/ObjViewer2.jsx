@@ -121,7 +121,7 @@ function AxisLabels() {
   );
 }
 
-export default function ObjViewer() {
+export default function ObjViewer2() {
   const [index, setIndex] = useState(0);
   const [objData, setObjData] = useState([]);
   const [loading, setLoading] = useState(true);

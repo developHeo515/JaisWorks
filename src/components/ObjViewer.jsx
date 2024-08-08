@@ -8,12 +8,13 @@ import * as THREE from "three";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import "./ObjViewer.css";
 import axios from "axios";
+import ErrorBoundary from "./ErrorBoundary"; // ErrorBoundary 임포트
 
+// function Model({ url }) {
 function Model({ url }) {
-  // function Model({ obj }) {
-  // console.log(url);
+  // console.log("?????", url);
   const obj = useLoader(OBJLoader, url);
-  // console.log(obj);
+  // console.log("실험중", obj);
   const ref = useRef();
 
   //중심축 이동 코드
@@ -26,6 +27,7 @@ function Model({ url }) {
 
       // 원하는 위치로 모델 이동 (예: x: 5, y: 0, z: 3)
       obj.position.add(new THREE.Vector3(0, 0, 0));
+      // obj.rotation.y = Math.PI;
 
       // Iterate through the children of the object
       obj.traverse((child) => {
@@ -144,23 +146,12 @@ export default function ObjViewer(props) {
       // const response = await axios.get(`http://54.180.245.26/get_json_data/`);
       // 여러분이 사용하고자 하는 API 엔드포인트로 대체하세요.
 
-      console.log(response.data);
+      // console.log(response.data);
       // console.log(response.data[ex].objs);
       // console.log(response.data[ex].objs.length);
 
-      // var arr = new Array(response.data[ex].objs.length);
-      // let newObj;
-      // for (let i = 0; i < response.data[ex].objs.length; i++) {
-      //   // console.log(i);
-      //   // console.log(response.data[ex].objs[i]);
-      //   // arr[i] = response.data[ex].objs[i];
-      //   // arr[i] = useLoader(OBJLoader, response.data[ex].objs[i]);
-      //   console.log(useLoader(OBJLoader, response.data[ex].objs[i]));
-      // }
-
       // const UrlObj = response.data[ex].objs;
       setObjData(response.data[ex].objs);
-
       // console.log("백엔드호출완");
     } catch (error) {
       console.log("백엔드호출실패 ObjViewer.jsx");
@@ -172,36 +163,7 @@ export default function ObjViewer(props) {
     getApi();
   }, []);
 
-  // useEffect(() => {
-  //   if (objData.length > 0) {
-  //     const loadedObjects = objData.map((UrlObj) =>
-  //       useLoader(OBJLoader, UrlObj)
-  //     );
-  //     setLoadedObjs(loadedObjects);
-  //   }
-  // }, [objData]);
-
   useEffect(() => {
-    // console.log("api", objData.length);
-    // console.log("local", objUrls.length);
-    // console.log(objData);
-    // console.log(objData.length);
-    // if (objData.length === 0) {
-    //   console.log("아직 못 받아옴");
-    // } else {
-    //   var array = new Array(objData.length);
-    //   let newObj;
-    //   for (let i = 0; i < objData.length; i++) {
-    //     // console.log(i);
-    //     // console.log(objData[i]);
-    //     // arr[i] = response.data[ex].objs[i];
-    //     array[i] = useLoader(OBJLoader, objData[i]);
-    //     // console.log(useLoader(OBJLoader, objData[i]));
-    //   }
-    //   console.log(array);
-    //   // setArr(array);
-    // }
-
     if (objData.length) {
       const interval = setInterval(() => {
         setIndex((prevIndex) => {
@@ -209,7 +171,7 @@ export default function ObjViewer(props) {
           // console.log(newIndex);
           return newIndex;
         });
-      }, 200); // 0.2초마다 모델을 변경합니다.
+      }, 100); // 0.2초마다 모델을 변경합니다.
       return () => clearInterval(interval);
     }
   }, [objData.length]);
@@ -225,6 +187,20 @@ export default function ObjViewer(props) {
         {/* <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} /> */}
         {/* 점 조명으로, 특정 지점에서 모든 방향으로 빛을 방출 */}
         {/* <pointLight position={[-10, -10, -10]} /> */}
+        <directionalLight
+          castShadow
+          position={[10, 10, 10]}
+          intensity={1.0}
+          shadow-mapSize-width={1024}
+          shadow-mapSize-height={1024}
+        />
+        <directionalLight
+          castShadow
+          position={[-10, -10, -10]}
+          intensity={0.5}
+          shadow-mapSize-width={1024}
+          shadow-mapSize-height={1024}
+        />
         <OrbitControls
         //   camera={cameraRef.current}
         // makeDefault={true}
@@ -235,8 +211,20 @@ export default function ObjViewer(props) {
         <AxesHelper size={5} />
         <GridHelper size={10} divisions={10} />
         <AxisLabels />
+
+        {/* <ErrorBoundary>
+          {objData.length > 0 && <Model url={objData[index]} />}
+        </ErrorBoundary> */}
         {/* 여기서 Obj 파일 받아서 시각화 시켜줌 */}
         <Model url={objData[index]} />
+        <mesh
+          receiveShadow
+          position={[0, -3, 0]}
+          rotation={[-Math.PI / 2, 0, 0]}
+        >
+          {/* <planeBufferGeometry attach="geometry" args={[500, 500]} /> */}
+          <shadowMaterial attach="material" opacity={0.5} />
+        </mesh>
       </Canvas>
     </div>
   );
