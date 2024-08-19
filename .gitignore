@@ -1,3 +1,6 @@
+#.env 꼭 추가해야함 api key 값이라 깃허브에 올리면 안된다.
+.env
+
 # Logs
 logs
 *.log

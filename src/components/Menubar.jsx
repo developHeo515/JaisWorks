@@ -8,6 +8,9 @@ function Menubar() {
     // localStorage.clear();
     history("/");
   };
+  const chatBotPage = () => {
+    history("/ChatBotPage");
+  };
 
   return (
     <>
@@ -29,7 +32,7 @@ function Menubar() {
         </Link>
 
         <li onClick={videoAnalysis}>영상 분석</li>
-        {/* <li>챗봇 솔루션</li> */}
+        <li onClick={chatBotPage}>챗봇 솔루션</li>
       </div>
     </>
   );

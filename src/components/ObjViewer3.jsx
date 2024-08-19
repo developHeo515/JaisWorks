@@ -1,4 +1,4 @@
-// Obj 파일 뷰어 완성
+// Obj 파일 뷰어 끊김 현상 해결중 - 잠시 홀딩중 24.8.9(금) ~
 
 import { useState, useEffect, useRef } from "react";
 import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
@@ -156,7 +156,7 @@ export default function ObjViewer3(props) {
           // console.log(newIndex);
           return newIndex;
         });
-      }, 100); // 0.2초마다 모델을 변경합니다.
+      }, 1000); // 0.1초마다 모델을 변경합니다.
       return () => clearInterval(interval);
     }
   }, [objData.length]);
