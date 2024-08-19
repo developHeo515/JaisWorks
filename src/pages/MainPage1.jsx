@@ -12,8 +12,6 @@ import GlbViewer from "../components/GlbViewer.jsx";
 import Example from "../components/Example.jsx";
 import { useNavigate } from "react-router";
 import React, { useState } from "react";
-// import img from "/images/1.PNG";
-// import img from "../../public/images/1.PNG";
 
 function MainPage1() {
   const navigate = useNavigate();
