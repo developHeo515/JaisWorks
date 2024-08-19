@@ -29,7 +29,7 @@ function ChatBotPage() {
             },
             { role: "user", content: input },
           ],
-          temperature: 1.4,
+          temperature: 0.5,
         },
         {
           headers: {
