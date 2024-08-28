@@ -8,7 +8,6 @@ import * as THREE from "three";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import "./ObjViewer.css";
 import axios from "axios";
-import ErrorBoundary from "./ErrorBoundary"; // ErrorBoundary 임포트
 
 // function Model({ url }) {
 function Model({ url }) {
@@ -212,9 +211,6 @@ export default function ObjViewer(props) {
         <GridHelper size={10} divisions={10} />
         <AxisLabels />
 
-        {/* <ErrorBoundary>
-          {objData.length > 0 && <Model url={objData[index]} />}
-        </ErrorBoundary> */}
         {/* 여기서 Obj 파일 받아서 시각화 시켜줌 */}
         <Model url={objData[index]} />
         <mesh

@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-three/drei": "^9.107.3",
     "@react-three/fiber": "^8.16.8",
+    "aws-sdk": "^2.1682.0",
     "axios": "^1.7.2",
     "openai": "^4.0.0",
     "react": "^18.2.0",

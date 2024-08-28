@@ -1,11 +1,13 @@
 import "./Menubar.css";
 import { Link, useNavigate } from "react-router-dom";
 
-function Menubar() {
+function Menubar({ setVideoState }) {
   const history = useNavigate();
 
   const videoAnalysis = () => {
     // localStorage.clear();
+    // "영상 분석" 버튼을 클릭했을 때 videoState를 false로 설정
+    setVideoState(false);
     history("/");
   };
   const chatBotPage = () => {

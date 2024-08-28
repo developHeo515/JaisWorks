@@ -2,14 +2,12 @@
 
 import Menubar from "../components/Menubar.jsx";
 import VideoAnalysis from "../components/VideoAnalysis.jsx";
-import Chatbot from "../components/Chatbot.jsx";
 import "./MainPage1.css";
-import ObjViewer from "../components/ObjViewer.jsx";
 import MeshViewer from "../components/MeshViewer.jsx";
-import ObjViewer3 from "../components/ObjViewer3.jsx";
+import ObjViewer from "../components/ObjViewer.jsx";
 import ObjViewer2 from "../components/ObjViewer2.jsx";
+import ObjViewer3 from "../components/ObjViewer3.jsx";
 import GlbViewer from "../components/GlbViewer.jsx";
-import Example from "../components/Example.jsx";
 import { useNavigate } from "react-router";
 import React, { useState } from "react";
 
@@ -34,7 +32,7 @@ function MainPage1() {
       </div> */}
       {!videoState ? (
         <div className="MainPage1">
-          <Menubar />
+          <Menubar setVideoState={setVideoState} />
           <div className="selectVideo">
             <img
               className="exampleImg"
@@ -65,7 +63,8 @@ function MainPage1() {
         </div>
       ) : (
         <div className="MainPage1">
-          <Menubar />
+          {/* setVideoState를 Menubar에 전달 */}
+          <Menubar setVideoState={setVideoState} />
           {console.log(num)}
           <VideoAnalysis ex={num} />
           <ObjViewer ex={num} />
