@@ -7,6 +7,7 @@ import MeshViewer from "../components/MeshViewer.jsx";
 import ObjViewer from "../components/ObjViewer.jsx";
 import ObjViewer2 from "../components/ObjViewer2.jsx";
 import ObjViewer3 from "../components/ObjViewer3.jsx";
+import ObjVideo from "../components/ObjVideo.jsx";
 import GlbViewer from "../components/GlbViewer.jsx";
 import { useNavigate } from "react-router";
 import React, { useState } from "react";
@@ -68,6 +69,7 @@ function MainPage1() {
           {console.log(num)}
           <VideoAnalysis ex={num} />
           <ObjViewer ex={num} />
+          {/* <ObjVideo ex={num} /> */}
         </div>
       )}
     </>

@@ -1,0 +1,25 @@
+/* ObjVideo.css */
+
+.video-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
+
+.video-player {
+  max-width: 100%;
+  height: auto;
+}
+/*  */
+.InputAndViewer {
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+}
+
+.InputAndViewer video {
+  width: 50%;
+  height: 100%;
+  /* margin-right: 20px; */
+}

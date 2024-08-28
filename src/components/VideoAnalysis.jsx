@@ -1,5 +1,8 @@
 // import movie from "/videos/movie.mp4";
 import InputVideo from "../assets/video/2D.mp4";
+
+import Input2 from "/videos/1_animation.mp4";
+
 import mv1 from "../assets/video/3.2D_angle_animation_label_leftarm.mp4";
 import mv2 from "../assets/video/7.3D_angle_animation_label_leftarm.mp4";
 import mv3 from "../assets/video/4.2D_angle_animation_label_rightarm.mp4";
