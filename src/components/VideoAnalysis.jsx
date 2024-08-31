@@ -15,6 +15,7 @@ import mv8 from "../assets/video/6.3D_angle_animation_label_rightleg.mp4";
 import ObjViewer from "../components/ObjViewer.jsx";
 import MeshViewer from "../components/MeshViewer.jsx";
 import ObjViewer3 from "../components/ObjViewer3.jsx";
+import ObjVideo from "./ObjVideo.jsx";
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./VideoAnalysis.css";
@@ -35,6 +36,8 @@ function VideoAnalysis(props) {
   const [left_leg_3D, setleft_leg_3D] = useState("");
   const [right_leg_2D, setright_leg_2D] = useState("");
   const [right_leg_3D, setright_leg_3D] = useState("");
+
+  const videoSrc = `/videos/${ex}_animation.mp4`;
 
   // 영상 분석 api 호출
   const getApi = async () => {
@@ -226,6 +229,13 @@ function VideoAnalysis(props) {
         <button onClick={playAllVideos}>동시 재생</button>
         <button onClick={pauseAllVideos}>동시 정지</button>
         <button onClick={resetAllVideos}>영상 시간 초기화</button>
+      </div>
+      <div className="obj-container">
+        {videoSrc && (
+          <video controls ref={(el) => (videoRefs.current[10] = el)}>
+            <source src={videoSrc} type="video/mp4" />
+          </video>
+        )}
       </div>
     </>
   );

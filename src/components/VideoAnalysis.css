@@ -33,3 +33,15 @@
 .VideoAnalysis Button {
   margin-right: 15px;
 }
+
+.obj-container {
+  width: 45%;
+  padding-left: 20px;
+  overflow: auto;
+}
+
+.obj-container video {
+  /* width: 500px; */
+  width: 90%;
+  height: 100%;
+}

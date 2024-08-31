@@ -1,11 +1,40 @@
 //기존 코드 보관
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 function ChatBotPage() {
   const [messages, setMessages] = useState([]); // To store chat messages
   const [input, setInput] = useState(""); // To store user input
   const [isLoading, setIsLoading] = useState(false); // To show loading status
+  // Step 1: angle_json 데이터를 저장할 상태 변수 생성
+  const [angleJson, setAngleJson] = useState(null);
+
+  // Step 2: API에서 데이터를 가져오는 함수
+  const getApi = async () => {
+    try {
+      // 첫 번째 API 호출로 URL을 가져옴
+      const res = await axios.get(
+        `https://golfposeserver.store/get_json_data/`
+      );
+      const jsonUrl = res.data[0].angle_json; // URL을 추출
+
+      console.log(jsonUrl); // URL을 콘솔에 출력
+
+      // 두 번째 API 호출로 실제 JSON 데이터를 가져옴
+      const jsonResponse = await axios.get(jsonUrl);
+      setAngleJson(jsonResponse.data); // 가져온 JSON 데이터를 상태에 저장
+      console.log(JSON.stringify(jsonResponse.data, null, 2));
+      // console.log(angleJson);
+    } catch (error) {
+      console.log("백엔드호출실패 ChatBotPage.jsx");
+      console.log(error); // 오류 발생 시 출력
+    }
+  };
+
+  // 컴포넌트가 마운트될 때 getApi 호출
+  useEffect(() => {
+    getApi();
+  }, []);
 
   const handleSend = async () => {
     if (input.trim() === "") return;
@@ -25,8 +54,15 @@ function ChatBotPage() {
           messages: [
             {
               role: "system",
-              content:
-                "너는 30년차 골프 전문가이고 유저에게 골프 자세를 코칭해주는 골프 강사야. 골프 논문이나 골프 자료들을 참고해서 유저의 질문에 대한 설명과 코칭을 진행하고 대답을 중학생 수준 이하의 사람들도 이해할 수 있게 수치적으로 대답해줘. ",
+              content: `
+                너는 30년차 골프 전문가이고 유저에게 골프 자세를 코칭해주는 골프 강사야. 
+                골프 논문이나 골프 자료들을 참고해서 유저의 질문에 대한 설명과 코칭을 
+                진행하고 대답을 중학생 수준 이하의 사람들도 이해할 수 있게 수치적으로 대답해줘.
+
+                그리고 추가로 답변에 ${angleJson} 이 데이터에서
+                left_Leg, left_arm, right_arm, right_leg 데이터들의 2D_list를 참고하여
+                분석한 결과를 항상 답변해줘
+                `,
             },
             { role: "user", content: input },
           ],
@@ -64,6 +100,15 @@ function ChatBotPage() {
 
   return (
     <div style={styles.container}>
+      {/* Step 5: 저장된 angle_json 데이터를 화면에 표시 */}
+      {/* <div>   
+        {angleJson ? (
+          <pre>{JSON.stringify(angleJson, null, 2)}</pre> // JSON 데이터를 보기 좋게 출력
+        ) : (
+          <p>Loading data...</p> // 데이터 로딩 중 표시할 텍스트
+        )}
+      </div> */}
+
       <div style={styles.chatWindow}>
         {messages.map((msg, index) => (
           <div key={index} style={styles[msg.sender]}>
