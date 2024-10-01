@@ -1,4 +1,4 @@
-// import FileUpload from "../components/FileUpload.jsx";
+import FileUpload from "../components/FileUpload.jsx";
 
 import Menubar from "../components/Menubar.jsx";
 import VideoAnalysis from "../components/VideoAnalysis.jsx";
@@ -23,6 +23,16 @@ function MainPage1() {
     setVideoState(true);
   };
 
+  //회원가입 페이지로 이동하는 함수
+  const goToSignUp = () => {
+    navigate("/signup");
+  };
+
+  // 로그인 페이지로 이동하는 함수
+  const goToLogin = () => {
+    navigate("/login");
+  };
+
   return (
     <>
       {/* <div className="MainPage1">
@@ -34,6 +44,8 @@ function MainPage1() {
       {!videoState ? (
         <div className="MainPage1">
           <Menubar setVideoState={setVideoState} />
+          {/* 로그인 페이지로 이동하는 버튼 추가 */}
+          {/* <button onClick={goToLogin}>로그인 페이지</button> */}
           <div className="selectVideo">
             <img
               className="exampleImg"
@@ -60,6 +72,7 @@ function MainPage1() {
               src="/images/35.PNG"
               onClick={() => videoSelect(69)}
             />
+            <FileUpload />
           </div>
         </div>
       ) : (
